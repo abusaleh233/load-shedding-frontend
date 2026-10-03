@@ -11,19 +11,11 @@ import { Textarea } from "@/components/ui/textarea";
 
 const CONTACT_INFO = [
   { icon: Mail, label: "Email", value: "abusaleh233@gmail.com" },
-  { icon: Phone, label: "Phone", value: "+880 1XXX-XXXXXX" },
+  { icon: Phone, label: "Phone", value: "+880 1940189750" },
   { icon: MapPin, label: "Based in", value: "Dhaka, Bangladesh" },
 ];
 
-/**
- * This form is intentionally client-side only — there's no backend
- * endpoint wired up to actually deliver these messages (that wasn't part
- * of the API this frontend consumes). It simulates a submission with a
- * short delay and a success toast, which is enough for a portfolio demo,
- * but don't rely on it to actually reach anyone. Wiring a real "contact"
- * endpoint (e.g. emailing via a transactional-email provider) would be a
- * small, separate backend addition if this ever needs to be real.
- */
+
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
