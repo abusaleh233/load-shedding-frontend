@@ -23,13 +23,7 @@ interface NavItem {
   icon: React.ComponentType<{ className?: string }>;
 }
 
-/**
- * ADMIN reuses the same /operator/* routes as OPERATOR for
- * Substations/Areas/Outages/Bills (middleware.ts already allows both
- * roles onto that prefix, and every one of those pages is RoleGuard-gated
- * for ["ADMIN", "OPERATOR"]) — no need for a parallel /admin/substations
- * etc. that would just render the identical page under a different URL.
- */
+
 const NAV_BY_ROLE: Record<Role, NavItem[]> = {
   CONSUMER: [
     { href: "/consumer", label: "Live outages", icon: Activity },
