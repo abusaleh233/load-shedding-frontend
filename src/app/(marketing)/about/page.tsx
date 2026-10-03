@@ -1,16 +1,6 @@
 import { Database, GitBranch, Lock, Radio, ShieldCheck, Zap } from "lucide-react";
 import { Reveal } from "@/components/marketing/reveal";
 
-const STACK = [
-  { label: "Next.js 14", note: "App Router frontend" },
-  { label: "TypeScript", note: "end to end" },
-  { label: "Express", note: "REST API" },
-  { label: "PostgreSQL", note: "via Prisma" },
-  { label: "Redis", note: "cache-aside" },
-  { label: "Stripe", note: "Checkout + webhooks" },
-  { label: "TanStack Query", note: "server state" },
-  { label: "Zustand", note: "session state" },
-];
 
 const PRINCIPLES = [
   {
@@ -82,33 +72,7 @@ export default function AboutPage() {
         ))}
       </div>
 
-      <Reveal delay={0.1}>
-        <h2 className="mt-16 text-2xl font-semibold tracking-tight">Stack</h2>
-      </Reveal>
-      <Reveal delay={0.15}>
-        <div className="mt-6 flex flex-wrap gap-2">
-          {STACK.map((item) => (
-            <div
-              key={item.label}
-              className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm"
-            >
-              <span className="font-medium">{item.label}</span>
-              <span className="text-muted-foreground">{item.note}</span>
-            </div>
-          ))}
-        </div>
-      </Reveal>
-
-      <Reveal delay={0.1}>
-        <div className="mt-16 flex items-start gap-3 rounded-xl border border-border bg-card p-6">
-          <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-          <p className="text-sm text-muted-foreground">
-            This site is a portfolio project demonstrating a full-stack build — authentication with JWT rotation,
-            RBAC, Stripe billing, Redis caching, and a concurrency-safe scheduling engine — rather than a live
-            utility deployment.
-          </p>
-        </div>
-      </Reveal>
+      
     </div>
   );
 }
