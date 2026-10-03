@@ -7,11 +7,7 @@ import { Button } from "@/components/ui/button";
 import type { LoginInput } from "@/lib/validators/auth.schema";
 import type { Role } from "@/types/api";
 
-/**
- * Demo credentials, kept in one place as requested. These accounts must
- * already exist in the backend (seeded or registered manually) — this
- * component doesn't create them, it only logs in with them.
- */
+
 const DEMO_ACCOUNTS: Array<{ role: Role; label: string; icon: typeof ShieldCheck; credentials: LoginInput }> = [
   {
     role: "ADMIN",
