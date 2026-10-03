@@ -15,13 +15,6 @@ function formatAmount(amount: number, currency: string) {
   );
 }
 
-/**
- * useSearchParams() opts the component it's called in out of static
- * rendering unless wrapped in <Suspense> — Next.js enforces this at build
- * time (`next build` fails otherwise), because without it the whole page
- * would have to become fully dynamic just to read one query param. See the
- * default export below for the boundary.
- */
 function PaymentSuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
