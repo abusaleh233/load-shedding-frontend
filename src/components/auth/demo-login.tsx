@@ -29,17 +29,7 @@ const DEMO_ACCOUNTS: Array<{ role: Role; label: string; icon: typeof ShieldCheck
   },
 ];
 
-/**
- * One-click login for each role, for demoing the app without typing
- * credentials. Deliberately does NOT call authService or apiClient
- * directly — it reuses useAuth()'s existing `login` mutation, the exact
- * same call the real login form makes, so token storage, the routing
- * cookies, auth-store state, the role-based redirect, and error toasts all
- * go through the one code path that's already tested by normal sign-in.
- * The only thing added here is a per-button loading state, since the
- * hook's shared `isLoggingIn` flag would otherwise light up all three
- * buttons at once instead of just the one that was clicked.
- */
+
 export function DemoLogin() {
   const { login } = useAuth();
   const [loadingRole, setLoadingRole] = useState<Role | null>(null);
