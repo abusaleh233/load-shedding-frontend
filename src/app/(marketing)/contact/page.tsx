@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 const CONTACT_INFO = [
-  { icon: Mail, label: "Email", value: "hello@gridcontrol.dev" },
+  { icon: Mail, label: "Email", value: "abusaleh233@gmail.com" },
   { icon: Phone, label: "Phone", value: "+880 1XXX-XXXXXX" },
   { icon: MapPin, label: "Based in", value: "Dhaka, Bangladesh" },
 ];
