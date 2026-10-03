@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * DESIGN TOKENS — "Grid Control Room"
+ * -----------------------------------
+ * This is a monitoring tool for physical infrastructure, not a generic
+ * SaaS product — status colors borrow from actual substation control-panel
+ * indicator lights (amber = warning/pending, emerald = healthy/resolved,
+ * red = critical) rather than a default brand-blue-and-white treatment.
+ * The brand accent itself is an electric cyan (--primary below) — distinct
+ * from those semantic status colors so "this button is the primary action"
+ * never gets visually confused with "this outage is a warning."
+ * Background is navy-black (hsl(222 47% 6%)), not a flat near-black
+ * (#0B0B0B/#111), so panels read as "dark console" rather than "dark mode
+ * toggle applied to a light-mode design."
+ */
+
+@layer base {
+  :root {
+    --background: 222 47% 97%;
+    --foreground: 222 47% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 8%;
+    --primary: 189 94% 38%; /* electric cyan */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 222 30% 92%;
+    --secondary-foreground: 222 47% 12%;
+    --muted: 222 20% 93%;
+    --muted-foreground: 222 15% 40%;
+    --accent: 222 30% 90%;
+    --accent-foreground: 222 47% 12%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 20% 87%;
+    --input: 222 20% 87%;
+    --ring: 189 94% 38%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222 47% 6%;
+    --foreground: 210 30% 92%;
+    --card: 222 40% 10%;
+    --card-foreground: 210 30% 92%;
+    --popover: 222 40% 10%;
+    --popover-foreground: 210 30% 92%;
+    --primary: 189 94% 48%;
+    --primary-foreground: 222 47% 6%;
+    --secondary: 222 30% 16%;
+    --secondary-foreground: 210 30% 92%;
+    --muted: 222 30% 14%;
+    --muted-foreground: 220 15% 65%;
+    --accent: 222 30% 18%;
+    --accent-foreground: 210 30% 92%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 189 94% 48%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv11", "ss01";
+  }
+}
+
+@layer utilities {
+  /* Applied to numeric/telemetry values (MW, kWh, timestamps, IDs) —
+     never to prose or button labels, so the monospace reads as "this is
+     a measured value" rather than decorative chrome. */
+  .font-data {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Marketing-site motion: a "current flowing through a circuit" effect for
+   the hero background (GridBackground component) and a slow ambient pulse
+   for standalone status/signal dots. Pure CSS (no per-frame JS cost) since
+   these run continuously behind content on the public pages.
+   --------------------------------------------------------------------- */
+@keyframes circuit-flow {
+  to {
+    stroke-dashoffset: -200;
+  }
+}
+
+@keyframes signal-pulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+}
+
+@layer utilities {
+  .animate-circuit-flow {
+    animation: circuit-flow 6s linear infinite;
+  }
+  .animate-signal-pulse {
+    animation: signal-pulse 2.4s ease-in-out infinite;
+  }
+}
