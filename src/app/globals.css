@@ -2,20 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/**
- * DESIGN TOKENS — "Grid Control Room"
- * -----------------------------------
- * This is a monitoring tool for physical infrastructure, not a generic
- * SaaS product — status colors borrow from actual substation control-panel
- * indicator lights (amber = warning/pending, emerald = healthy/resolved,
- * red = critical) rather than a default brand-blue-and-white treatment.
- * The brand accent itself is an electric cyan (--primary below) — distinct
- * from those semantic status colors so "this button is the primary action"
- * never gets visually confused with "this outage is a warning."
- * Background is navy-black (hsl(222 47% 6%)), not a flat near-black
- * (#0B0B0B/#111), so panels read as "dark console" rather than "dark mode
- * toggle applied to a light-mode design."
- */
 
 @layer base {
   :root {
