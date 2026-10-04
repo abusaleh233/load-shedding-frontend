@@ -37,6 +37,7 @@ const NAV_BY_ROLE: Record<Role, NavItem[]> = {
     { href: "/operator/outages", label: "Outages", icon: AlertTriangle },
     { href: "/operator/schedules", label: "Schedules", icon: CalendarClock },
     
+    
   ],
   ADMIN: [
     { href: "/admin", label: "Overview", icon: Home },
