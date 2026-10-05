@@ -22,12 +22,7 @@ function buildVariants(from: RevealProps["from"]): Variants {
   };
 }
 
-/**
- * Wraps children in a fade+slide entrance that plays once, when the
- * element scrolls into view — the one animation primitive every marketing
- * page below is built from, so the whole site's motion language stays
- * consistent instead of each page inventing its own.
- */
+
 export function Reveal({ children, className, delay = 0, from = "bottom" }: RevealProps) {
   return (
     <motion.div
