@@ -1,10 +1,4 @@
-/**
- * Decorative background: a set of right-angled "circuit trace" lines with
- * a flowing dashed stroke (animate-circuit-flow, in globals.css) and a few
- * pulsing node dots (animate-signal-pulse) at the junctions. Ties directly
- * to the product's subject matter — a power grid — rather than a generic
- * particle/blob background. Pure SVG + CSS, no JS animation loop.
- */
+
 export function GridBackground() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
