@@ -10,12 +10,7 @@ interface AnimatedCounterProps {
   className?: string;
 }
 
-/**
- * Animates from 0 to `value` once the element scrolls into view, using a
- * spring rather than a linear tween so it settles with a slight
- * overshoot-then-ease — reads as more "alive" than a flat countUp, which
- * matters here since these numbers are meant to feel like live telemetry.
- */
+
 export function AnimatedCounter({ value, suffix = "", prefix = "", className }: AnimatedCounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
