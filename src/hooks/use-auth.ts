@@ -16,21 +16,12 @@ export const ROLE_HOME: Record<string, string> = {
   CONSUMER: "/consumer",
 };
 
-/**
- * Central auth hook: session hydration on app load, login/register
- * mutations, and logout. Mount the hydration effect once, high in the
- * tree (root layout) — see app/layout.tsx.
- */
 export function useAuth() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { user, isAuthenticated, isHydrated, setSession, setUser, logout, markHydrated } = useAuthStore();
 
-  // On first load, if a token exists in localStorage but the store has no
-  // user yet (e.g. hard refresh), fetch the profile to repopulate it.
-  // Query key intentionally matches use-profile.ts's ["auth", "me"] — same
-  // underlying GET /users/me data, so the Profile page reuses this cache
-  // entry instead of firing a redundant duplicate fetch on first visit.
+ 
   const { data: hydratedUser } = useQuery({
     queryKey: ["auth", "me"],
     queryFn: authService.getMe,

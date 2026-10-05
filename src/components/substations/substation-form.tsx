@@ -14,9 +14,7 @@ import type { Substation } from "@/types/api";
 
 const STATUS_OPTIONS = ["ACTIVE", "MAINTENANCE", "DECOMMISSIONED"] as const;
 
-// A single, permissive shape for both create and edit — `code` is only
-// ever read/submitted in create mode (it's immutable once set, per the
-// backend's updateSubstationSchema, which has no `code` field at all).
+
 interface SubstationFormValues {
   name: string;
   code?: string;
