@@ -2,19 +2,34 @@
 
 import { useState } from "react";
 import { format } from "date-fns";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Loader2 } from "lucide-react";
 import { RoleGuard } from "@/components/layout/role-guard";
 import { useAuth } from "@/hooks/use-auth";
 import { useBills, useDeleteBill, useUpdateBill } from "@/hooks/use-bills";
 import { BillForm } from "@/components/bills/bill-form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import type { Bill, BillStatus } from "@/types/api";
 
-const STATUS_VARIANT: Record<BillStatus, "warning" | "success" | "destructive" | "secondary"> = {
+const STATUS_VARIANT: Record<
+  BillStatus,
+  "warning" | "success" | "destructive" | "secondary"
+> = {
   UNPAID: "warning",
   PAID: "success",
   OVERDUE: "destructive",
@@ -22,9 +37,10 @@ const STATUS_VARIANT: Record<BillStatus, "warning" | "success" | "destructive" |
 };
 
 function formatAmount(amount: number, currency: string) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: currency.toUpperCase() }).format(
-    amount / 100
-  );
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency.toUpperCase(),
+  }).format(amount / 100);
 }
 
 function OutstandingBillActions({ bill }: { bill: Bill }) {
@@ -43,16 +59,26 @@ function OutstandingBillActions({ bill }: { bill: Bill }) {
             variant="ghost"
             size="sm"
             disabled={updateMutation.isPending}
-            onClick={() => updateMutation.mutate({ id: bill.id, input: { status: "OVERDUE" } })}
+            onClick={() =>
+              updateMutation.mutate({
+                id: bill.id,
+                input: { status: "OVERDUE" },
+              })
+            }
           >
+            {updateMutation.isPending && (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            )}
             Mark overdue
           </Button>
+
           <Dialog open={editOpen} onOpenChange={setEditOpen}>
             <DialogTrigger asChild>
               <Button variant="ghost" size="sm">
                 Edit
               </Button>
             </DialogTrigger>
+
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Edit bill</DialogTitle>
@@ -62,6 +88,7 @@ function OutstandingBillActions({ bill }: { bill: Bill }) {
           </Dialog>
         </>
       )}
+
       {isAdmin && (
         <Button
           variant="ghost"
@@ -73,7 +100,11 @@ function OutstandingBillActions({ bill }: { bill: Bill }) {
             }
           }}
         >
-          <Trash2 className="h-4 w-4 text-destructive" />
+          {deleteMutation.isPending ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Trash2 className="h-4 w-4 text-destructive" />
+          )}
         </Button>
       )}
     </div>
@@ -89,8 +120,11 @@ function BillsContent() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold">Bills</h2>
-          <p className="text-sm text-muted-foreground">Every consumer bill across the system.</p>
+          <p className="text-sm text-muted-foreground">
+            Every consumer bill across the system.
+          </p>
         </div>
+
         <Dialog open={createOpen} onOpenChange={setCreateOpen}>
           <DialogTrigger asChild>
             <Button>
@@ -98,6 +132,7 @@ function BillsContent() {
               New bill
             </Button>
           </DialogTrigger>
+
           <DialogContent>
             <DialogHeader>
               <DialogTitle>New bill</DialogTitle>
@@ -108,7 +143,14 @@ function BillsContent() {
       </div>
 
       {isLoading ? (
-        <Skeleton className="h-64 w-full" />
+        <div className="flex min-h-[300px] w-full items-center justify-center">
+          <div className="flex flex-col items-center gap-3">
+            <Loader2 className="h-10 w-10 animate-spin text-primary" />
+            <p className="text-sm text-muted-foreground">
+              Loading bills...
+            </p>
+          </div>
+        </div>
       ) : (
         <Table>
           <TableHeader>
@@ -121,26 +163,45 @@ function BillsContent() {
               <TableHead />
             </TableRow>
           </TableHeader>
+
           <TableBody>
             {data?.bills.map((bill) => (
               <TableRow key={bill.id}>
-                <TableCell className="text-sm">{bill.user?.name ?? "—"}</TableCell>
+                <TableCell className="text-sm">
+                  {bill.user?.name ?? "—"}
+                </TableCell>
+
                 <TableCell className="font-data text-xs">
-                  {format(new Date(bill.billingPeriodStart), "PP")} – {format(new Date(bill.billingPeriodEnd), "PP")}
+                  {format(new Date(bill.billingPeriodStart), "PP")} –{" "}
+                  {format(new Date(bill.billingPeriodEnd), "PP")}
                 </TableCell>
-                <TableCell className="font-data">{formatAmount(bill.amountDue, bill.currency)}</TableCell>
-                <TableCell className="font-data text-xs">{format(new Date(bill.dueDate), "PP")}</TableCell>
+
+                <TableCell className="font-data">
+                  {formatAmount(bill.amountDue, bill.currency)}
+                </TableCell>
+
+                <TableCell className="font-data text-xs">
+                  {format(new Date(bill.dueDate), "PP")}
+                </TableCell>
+
                 <TableCell>
-                  <Badge variant={STATUS_VARIANT[bill.status]}>{bill.status}</Badge>
+                  <Badge variant={STATUS_VARIANT[bill.status]}>
+                    {bill.status}
+                  </Badge>
                 </TableCell>
+
                 <TableCell>
                   <OutstandingBillActions bill={bill} />
                 </TableCell>
               </TableRow>
             ))}
+
             {data?.bills.length === 0 && (
               <TableRow>
-                <TableCell colSpan={6} className="text-center text-muted-foreground">
+                <TableCell
+                  colSpan={6}
+                  className="text-center text-muted-foreground"
+                >
                   No bills yet.
                 </TableCell>
               </TableRow>
