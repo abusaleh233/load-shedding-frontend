@@ -1,19 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-/**
- * Coarse, edge-level route gate. This runs before any page renders (both
- * full loads and client-side navigations go through it in the App Router),
- * using the small `lsp_session` / `lsp_role` cookies set by
- * src/lib/token-storage.ts alongside the real tokens in localStorage.
- *
- * This is a UX optimization (skip rendering the wrong shell, redirect
- * fast), NOT the security boundary — those cookies are plain, readable,
- * unsigned values set by client JS, so a determined user could edit them.
- * That doesn't matter: every actual API call still goes through the
- * backend's own authenticate + authorize middleware with the real JWT, so
- * a forged cookie only gets someone to a page shell with no real data
- * (every query will 401/403 and the RoleGuard component will bounce them).
- */
+
 
 const ROLE_PREFIXES: Record<string, string[]> = {
   "/admin": ["ADMIN"],
