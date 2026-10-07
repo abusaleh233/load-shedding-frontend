@@ -1,6 +1,6 @@
 # Grid Control — Load Shedding & Power Management Frontend
 
-Next.js (App Router, TypeScript) frontend for the [load-shedding-power-management-api](../load-shedding-api) backend.
+Next.js (App Router, TypeScript) frontend for the [load-shedding-power-management-api](https:load-shedding-api.vercel.app/) backend.
 
 ## Stack
 
