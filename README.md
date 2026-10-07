@@ -14,12 +14,7 @@ Next.js (App Router, TypeScript) frontend for the [load-shedding-power-managemen
 
 ## Getting started
 
-```bash
-npm install
-cp .env.local.example .env.local
-# edit .env.local: point NEXT_PUBLIC_API_BASE_URL at your backend
-npm run dev
-```
+
 
 | Role | Email | Password |
 |---|---|---|
