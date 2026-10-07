@@ -1,18 +1,4 @@
-/**
- * Single source of truth for reading/writing the access + refresh tokens.
- *
- * This is deliberately a plain module, not part of the Zustand auth store
- * (src/stores/auth-store.ts). api-client.ts needs to read/write tokens on
- * every request and on 401, and the auth store needs to call
- * auth.service.ts (login/refresh/logout) which itself calls api-client.ts.
- * If api-client.ts imported the Zustand store directly, that would be a
- * circular import (store -> service -> api-client -> store). Routing both
- * through this tiny, dependency-free module breaks the cycle.
- *
- * Tokens are persisted to localStorage so a page refresh doesn't force a
- * re-login, and mirrored in a module-level variable so reads inside the
- * same tab don't pay a synchronous localStorage hit on every request.
- */
+
 
 const ACCESS_TOKEN_KEY = "lsp_access_token";
 const REFRESH_TOKEN_KEY = "lsp_refresh_token";
