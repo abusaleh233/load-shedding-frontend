@@ -4,32 +4,18 @@ import type { ApiErrorResponse, ApiSuccessResponse, AuthTokens } from "@/types/a
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5000/api/v1";
 
-/**
- * Main API client. Every service function in src/services/*.service.ts
- * goes through this instance — never call axios directly from a component
- * or hook, or the interceptors below (token attach + auto-refresh) get
- * silently bypassed.
- */
+
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
 
-/**
- * A second, interceptor-free instance used ONLY for the refresh-token call
- * itself. If the main `apiClient` instance made that call, its own
- * response interceptor would see a 401 (an expired/invalid refresh token)
- * and try to refresh again — an infinite loop. Keeping this bare avoids
- * that entirely, rather than special-casing the URL inside one interceptor.
- */
 const refreshClient = axios.create({
   baseURL: API_BASE_URL,
   headers: { "Content-Type": "application/json" },
 });
 
-// ---------------------------------------------------------------------------
-// Request interceptor: attach the access token to every outgoing request.
-// ---------------------------------------------------------------------------
+
 apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const token = getAccessToken();
   if (token) {
@@ -38,12 +24,6 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   return config;
 });
 
-// ---------------------------------------------------------------------------
-// Response interceptor: on a 401, attempt exactly one silent refresh, then
-// retry the original request. Concurrent requests that 401 while a refresh
-// is already in flight queue up and wait for that single refresh to finish,
-// instead of each firing its own POST /auth/refresh.
-// ---------------------------------------------------------------------------
 
 type QueuedRequest = {
   resolve: (token: string) => void;
