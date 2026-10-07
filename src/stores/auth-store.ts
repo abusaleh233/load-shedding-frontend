@@ -13,13 +13,7 @@ interface AuthState {
   markHydrated: () => void;
 }
 
-/**
- * Holds the CURRENT USER OBJECT and derived auth state for the UI (what
- * name/role to show, which nav items render, etc). The actual JWTs live in
- * token-storage.ts, not here — api-client.ts reads tokens directly from
- * there so it never needs to import this store (see token-storage.ts's
- * top comment for why that matters).
- */
+
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isHydrated: false,
